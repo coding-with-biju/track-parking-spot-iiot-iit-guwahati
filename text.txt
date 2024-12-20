@@ -1,0 +1,40 @@
+<?php
+include('db_config.php');
+
+$query = "SELECT * FROM iit_parking_status ORDER BY timestamp DESC LIMIT 1";
+$result = mysqli_query($conn, $query);
+
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+
+    $temperature = $row['temperature'];
+    $humidity = $row['humidity'];
+    $parking_status_1 = $row['parking_status_1'];
+    $parking_status_2 = $row['parking_status_2'];
+    $parking_status_3 = $row['parking_status_3'];
+    $parking_status_4 = $row['parking_status_4'];
+} else {
+    $temperature = $humidity = $parking_status_1 = $parking_status_2 = $parking_status_3 = $parking_status_4 = "N/A";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parking Spot Tracker</title>
+</head>
+<body>
+  <h1>Parking Spot and Environmental Data</h1>
+  <p><strong>Temperature:</strong> <?php echo $temperature; ?> °C</p>
+  <p><strong>Humidity:</strong> <?php echo $humidity; ?> %</p>
+  <h2>Parking Spot Status</h2>
+  <ul>
+    <li><strong>Spot 1:</strong> <?php echo $parking_status_1; ?></li>
+    <li><strong>Spot 2:</strong> <?php echo $parking_status_2; ?></li>
+    <li><strong>Spot 3:</strong> <?php echo $parking_status_3; ?></li>
+    <li><strong>Spot 4:</strong> <?php echo $parking_status_4; ?></li>
+  </ul>
+</body>
+</html>
